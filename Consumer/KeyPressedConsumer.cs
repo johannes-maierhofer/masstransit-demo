@@ -32,14 +32,17 @@ namespace Consumer
         }
 
         protected override void ConfigureConsumer(
-            IReceiveEndpointConfigurator endpointConfigurator,
-            IConsumerConfigurator<KeyPressedConsumer> consumerConfigurator)
+            IReceiveEndpointConfigurator endpointConfigurator, 
+            IConsumerConfigurator<KeyPressedConsumer> consumerConfigurator,
+            IRegistrationContext context)
         {
             consumerConfigurator.UseMessageRetry(r => r.Exponential(
                 3,
                 TimeSpan.FromSeconds(1),
                 TimeSpan.FromSeconds(5),
                 TimeSpan.FromSeconds(1)));
+
+            base.ConfigureConsumer(endpointConfigurator, consumerConfigurator, context);
         }
     }
 
