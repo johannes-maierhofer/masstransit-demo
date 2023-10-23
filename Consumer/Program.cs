@@ -7,15 +7,10 @@ builder.Services.AddMassTransit(config =>
     config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("consumer--", false));
     config.AddConsumers(typeof(Program).Assembly);
 
-    config.UsingRabbitMq((ctx, rmqConfig) =>
+    config.UsingAzureServiceBus((ctx, azureSbConfig) =>
     {
-        rmqConfig.Host("localhost", 5672, "/", hostConfig =>
-        {
-            hostConfig.Username("guest");
-            hostConfig.Password("guest");
-        });
-
-        rmqConfig.ConfigureEndpoints(ctx);
+        azureSbConfig.Host("Your-Primary-Connection-String-from-Azure-ServiceBus");
+        azureSbConfig.ConfigureEndpoints(ctx);
     });
 });
 

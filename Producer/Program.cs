@@ -5,13 +5,9 @@ var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddMassTransit(config =>
 {
-    config.UsingRabbitMq((_, rmqConfig) =>
+    config.UsingAzureServiceBus((_, azureSbConfig) =>
     {
-        rmqConfig.Host("localhost", 5672, "/", hostConfig =>
-        {
-            hostConfig.Username("guest");
-            hostConfig.Password("guest");
-        });
+        azureSbConfig.Host("Your-Primary-Connection-String-from-Azure-ServiceBus");
     });
 });
 
