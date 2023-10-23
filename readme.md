@@ -1,0 +1,1 @@
+Run docker-compose up to install RabbitMQ in a local container.

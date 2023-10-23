@@ -1,0 +1,20 @@
+version: "3.3"
+name: "masstransit-demo"
+
+services:
+
+    #######################################################
+    #  Rabbitmq
+    #######################################################
+  rabbitmq:
+    container_name: masstransit-demo-rabbitmq
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/home/rabbitmq/data
+
+volumes:
+  rabbitmq_data:
