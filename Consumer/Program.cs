@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddMassTransit(config =>
 {
+    config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("consumer--", false));
     config.AddConsumers(typeof(Program).Assembly);
 
     config.UsingRabbitMq((ctx, rmqConfig) =>
