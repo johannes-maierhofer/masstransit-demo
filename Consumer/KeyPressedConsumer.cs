@@ -20,48 +20,43 @@ namespace Consumer
                 context.Message.Key,
                 numberOfRetries);
             
-            // throw new Exception("Error for testing Consumer retries.");
-            return Task.CompletedTask;
+            throw new ConsumerTestException();
+            // return Task.CompletedTask;
         }
     }
 
-    public class KeyPressedDefinition : ConsumerDefinition<KeyPressedConsumer>
-    {
-        public KeyPressedDefinition()
-        {
-            ConcurrentMessageLimit = 8;
-        }
+    //public class KeyPressedDefinition : ConsumerDefinition<KeyPressedConsumer>
+    //{
+    //    protected override void ConfigureConsumer(
+    //        IReceiveEndpointConfigurator endpointConfigurator,
+    //        IConsumerConfigurator<KeyPressedConsumer> consumerConfigurator,
+    //        IRegistrationContext context)
+    //    {
+    //        consumerConfigurator.UseMessageRetry(r => r.Exponential(
+    //            3,
+    //            TimeSpan.FromSeconds(1),
+    //            TimeSpan.FromSeconds(5),
+    //            TimeSpan.FromSeconds(1)));
+            
+    //        base.ConfigureConsumer(endpointConfigurator, consumerConfigurator, context);
+    //    }
+    //}
 
-        protected override void ConfigureConsumer(
-            IReceiveEndpointConfigurator endpointConfigurator, 
-            IConsumerConfigurator<KeyPressedConsumer> consumerConfigurator,
-            IRegistrationContext context)
-        {
-            consumerConfigurator.UseMessageRetry(r => r.Exponential(
-                3,
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(5),
-                TimeSpan.FromSeconds(1)));
+    //// consuming faults
+    //// https://masstransit-project.com/usage/exceptions.html#consuming-faults
+    //public class KeyPressedFault : IConsumer<Fault<KeyPressed>>
+    //{
+    //    private readonly ILogger<KeyPressedFault> _logger;
 
-            base.ConfigureConsumer(endpointConfigurator, consumerConfigurator, context);
-        }
-    }
+    //    public KeyPressedFault(ILogger<KeyPressedFault> logger)
+    //    {
+    //        _logger = logger;
+    //    }
 
-    // consuming faults
-    // https://masstransit-project.com/usage/exceptions.html#consuming-faults
-    public class KeyPressedFault : IConsumer<Fault<KeyPressed>>
-    {
-        private readonly ILogger<KeyPressedFault> _logger;
-
-        public KeyPressedFault(ILogger<KeyPressedFault> logger)
-        {
-            _logger = logger;
-        }
-
-        public Task Consume(ConsumeContext<Fault<KeyPressed>> context)
-        {
-            _logger.LogInformation("Handle faulted KeyPressed event for message with Key '{Key}'.", context.Message.Message.Key);
-            return Task.CompletedTask;
-        }
-    }
+    //    public Task Consume(ConsumeContext<Fault<KeyPressed>> context)
+    //    {
+    //        _logger.LogInformation("Handle faulted KeyPressed event for message with Key '{Key}'.", context.Message.Message.Key);
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }

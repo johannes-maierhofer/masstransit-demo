@@ -17,6 +17,9 @@ builder.Services.AddMassTransit(config =>
         });
 
         rmqConfig.ConfigureEndpoints(ctx);
+
+        // configure the RetryFilter middleware
+        rmqConfig.UseMessageRetry(configurator => configurator.SetRetryPolicy(r => r.Immediate(1)));
     });
 });
 
