@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Messages;
+using Microsoft.Extensions.Logging;
 
 namespace Consumer
 {
@@ -19,20 +20,14 @@ namespace Consumer
                 context.Message.Key,
                 numberOfRetries);
             
-            // throw new Exception("Error for testing Consumer retries.");
             return Task.CompletedTask;
         }
     }
 
     public class KeyPressedDefinition : ConsumerDefinition<KeyPressedConsumer>
     {
-        public KeyPressedDefinition()
-        {
-            ConcurrentMessageLimit = 8;
-        }
-
         protected override void ConfigureConsumer(
-            IReceiveEndpointConfigurator endpointConfigurator, 
+            IReceiveEndpointConfigurator endpointConfigurator,
             IConsumerConfigurator<KeyPressedConsumer> consumerConfigurator,
             IRegistrationContext context)
         {

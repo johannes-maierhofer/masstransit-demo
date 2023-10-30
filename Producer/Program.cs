@@ -1,13 +1,20 @@
-﻿using MassTransit;
+﻿using Azure.Messaging.ServiceBus;
+using MassTransit;
 using Messages;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder();
+var builder = Host.CreateApplicationBuilder();
 
 builder.Services.AddMassTransit(config =>
 {
     config.UsingAzureServiceBus((_, azureSbConfig) =>
     {
-        azureSbConfig.Host("Your-Primary-Connection-String-from-Azure-ServiceBus");
+        azureSbConfig.Host("YOUR-PRIMARY-CONNECTION-STRING",
+            cfg =>
+            {
+                cfg.TransportType = ServiceBusTransportType.AmqpWebSockets;
+            });
     });
 });
 
