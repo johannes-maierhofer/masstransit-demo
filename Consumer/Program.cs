@@ -1,6 +1,7 @@
 ﻿using MassTransit;
+using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder();
+var builder = Host.CreateApplicationBuilder();
 
 builder.Services.AddMassTransit(config =>
 {

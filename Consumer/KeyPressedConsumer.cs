@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Messages;
+using Microsoft.Extensions.Logging;
 
 namespace Consumer
 {
