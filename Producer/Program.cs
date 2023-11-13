@@ -28,8 +28,8 @@ while (cki.Key != ConsoleKey.Escape)
 {
     using (app.Services.CreateScope())
     {
-        var bus = app.Services.GetRequiredService<IBus>();
-        await bus.Publish(new KeyPressed(cki.Key.ToString()));
+        var publishEndpoint = app.Services.GetRequiredService<IPublishEndpoint>();
+        await publishEndpoint.Publish(new KeyPressed(cki.Key.ToString()));
         
         Console.WriteLine();
         Console.WriteLine($"Published KeyPressed event for key '{cki.Key}'.");
