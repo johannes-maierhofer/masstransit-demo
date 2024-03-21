@@ -10,6 +10,10 @@ builder.Services.AddMassTransit(config =>
 
     config.UsingRabbitMq((ctx, rmqConfig) =>
     {
+        // Consuming messages from other systems where messages may not be produced by MassTransit, raw JSON is commonly used.
+        // see https://masstransit.io/documentation/configuration/serialization#raw-json
+        rmqConfig.UseRawJsonSerializer();
+
         rmqConfig.Host("localhost", 5672, "/", hostConfig =>
         {
             hostConfig.Username("guest");
