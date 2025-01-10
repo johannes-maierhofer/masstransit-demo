@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="MassTransit" Version="8.1.1" />
-	<PackageReference Include="MassTransit.RabbitMQ" Version="8.1.1" />
+	<PackageReference Include="MassTransit" Version="8.3.4" />
+	<PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
   </ItemGroup>
 
