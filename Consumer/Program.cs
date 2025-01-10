@@ -1,4 +1,7 @@
-﻿using MassTransit;
+﻿using CloudEventify.MassTransit;
+using Consumer;
+using MassTransit;
+using Messages;
 using Microsoft.Extensions.Hosting;
 
 var builder = Host.CreateApplicationBuilder();
@@ -15,6 +18,10 @@ builder.Services.AddMassTransit(config =>
             hostConfig.Username("guest");
             hostConfig.Password("guest");
         });
+
+        rmqConfig
+            .UseCloudEvents()
+            .WithTypes(t => t.MapAllTypes(typeof(KeyPressed).Assembly));
 
         rmqConfig.ConfigureEndpoints(ctx);
     });
