@@ -14,6 +14,9 @@ builder.Services.AddMassTransit(config =>
             hostConfig.Username("guest");
             hostConfig.Password("guest");
         });
+
+        rmqConfig.UseRawJsonSerializer();
+        rmqConfig.UseRawJsonDeserializer();
     });
 });
 
