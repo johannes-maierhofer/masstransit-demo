@@ -1,22 +1,30 @@
-﻿using MassTransit;
+﻿using Infrastructure;
+using Infrastructure.Filters;
+using MassTransit;
 using Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = Host.CreateApplicationBuilder();
 
+builder.Services.AddTransient<Token>();
+
 builder.Services.AddMassTransit(config =>
 {
-    config.UsingRabbitMq((_, rmqConfig) =>
+    config.UsingRabbitMq((context, cfg) =>
     {
-        rmqConfig.Host("localhost", 5672, "/", hostConfig =>
+        cfg.Host("localhost", 5672, "/", hostConfig =>
         {
             hostConfig.Username("guest");
             hostConfig.Password("guest");
         });
 
-        rmqConfig.UseRawJsonSerializer();
-        rmqConfig.UseRawJsonDeserializer();
+        cfg.UseRawJsonSerializer();
+        cfg.UseRawJsonDeserializer();
+
+        cfg.UseSendFilter(typeof(TokenSendFilter<>), context);
+        cfg.UsePublishFilter(typeof(TokenPublishFilter<>), context);
+        cfg.UseConsumeFilter(typeof(TokenConsumeFilter<>), context);
     });
 });
 
